@@ -6,7 +6,7 @@ import Chart from "./Chart";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
 
-const Container = styled.div`
+export const Container = styled.div`
     padding: 0px 20px;
     max-width: 480px;
     margin: 0 auto;
@@ -16,10 +16,31 @@ const Header = styled.header`
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: 20px;
 `;
 const Title = styled.h1`
     font-size: 48px;
     color: ${(props) => props.theme.accentColor};
+`;
+const BtnBox = styled.div`
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 5px;
+`;
+const BackBtn = styled.button`
+    margin-left: 360px;
+    padding: 7px 15px;
+    border-radius: 15px;
+    font-weight: 600;
+    background-color: ${(props) => props.theme.reverseBg};
+    color: ${(props) => props.theme.reverseColor};
+    border: 0;
+    &:hover {
+        cursor: pointer;
+        color: ${(props) => props.theme.accentColor};
+    }
 `;
 const Loader = styled.span`
     text-align: center;
@@ -134,11 +155,6 @@ function Coin() {
     const { state } = useLocation<RouteState>();
     const priceMatch = useRouteMatch("/:coinId/price");
     const chartMatch = useRouteMatch("/:coinId/chart");
-    // fetch 함수에 argument가 필요한 경우 : () => fetchCoinInfo(coinId)
-    // query key는 고유하다. react query는 query key를 array로 인식하므로
-    // => ["info",coinId], ["tickers",coinId]
-    // isLoading, data가 이름이 같으므로 위 아래 같이 쓸 수 없다 따라서 이름을 바꿔야 한다
-    // isLoading:infoLoading
     const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(["info", coinId], () => fetchCoinInfo(coinId));
     const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(["tickers", coinId], () => fetchCoinTickers(coinId));
     const loading = infoLoading || tickersLoading;
@@ -150,6 +166,15 @@ function Coin() {
             <Header>
                 <Title>{state?.name ? state.name : loading ? "Loading..." : infoData?.name}</Title>
             </Header>
+            <BtnBox>
+                <Link
+                    to={{
+                        pathname: `/`,
+                    }}
+                >
+                    <BackBtn>Home</BackBtn>
+                </Link>
+            </BtnBox>
             {loading ? (
                 <Loader>Loading...</Loader>
             ) : (
@@ -189,7 +214,7 @@ function Coin() {
                     </Tabs>
                     <Switch>
                         <Route path={`/${coinId}/price`}>
-                            <Price />
+                            <Price coinId={coinId} />
                         </Route>
                         <Route path={`/:coinId/chart`}>
                             <Chart coinId={coinId} />

@@ -6,5 +6,11 @@ declare module "styled-components" {
         bgColor: string;
         accentColor: string;
         cardBgColor: string;
+        reverseBg: string;
+        reverseColor: string;
+        tableThOdd: string;
+        tableThEven: string;
+        tableTdOdd: string;
+        tableTdEven: string;
     }
 }

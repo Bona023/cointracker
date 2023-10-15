@@ -4,10 +4,10 @@ import ReactApexChart from "react-apexcharts";
 import { useRecoilValue } from "recoil";
 import { isDarkAtom } from "../atom";
 
-interface ChartProps {
+export interface ChartProps {
     coinId: string;
 }
-interface IHistorical {
+export interface IHistorical {
     time_open: number;
     time_close: number;
     open: string;
@@ -27,35 +27,54 @@ function Chart({ coinId }: ChartProps) {
                 "Loading chart..."
             ) : (
                 <ReactApexChart
-                    type="line"
+                    type="candlestick"
                     series={[
                         {
-                            name: "sales",
-                            data: data?.map((price) => parseFloat(price.close)) ?? [],
+                            data:
+                                data?.map((price) => {
+                                    return {
+                                        x: price.time_close * 1000,
+                                        y: [price.open, price.high, price.low, price.close],
+                                    };
+                                }) ?? [],
                         },
                     ]}
                     options={{
-                        theme: { mode: isDark ? "dark" : "light" },
-                        chart: {
-                            height: 500,
-                            width: 500,
-                            toolbar: { show: false },
-                            background: "f000",
+                        theme: {
+                            mode: isDark ? "dark" : "light",
                         },
-                        yaxis: { labels: { show: false }, axisBorder: { show: false } },
+                        chart: {
+                            height: 300,
+                            width: 500,
+                            toolbar: {
+                                show: false,
+                            },
+                        },
+                        yaxis: {
+                            labels: {
+                                show: false,
+                            },
+                        },
                         xaxis: {
                             type: "datetime",
-                            axisTicks: { show: false },
-                            labels: { show: false },
-                            categories: data?.map((price) => new Date(price.time_close * 1000).toISOString()),
+                            labels: {
+                                format: "dd'MMM",
+                            },
                         },
-                        grid: { show: false },
-                        stroke: { curve: "smooth", width: 3 },
-                        fill: { type: "gradient", gradient: { gradientToColors: ["#7d5fff"], stops: [0, 100] } },
-                        colors: ["#ff4d4d"],
+                        grid: {
+                            show: false,
+                        },
                         tooltip: {
-                            y: {
-                                formatter: (value) => `$ ${value.toFixed(2)}`,
+                            x: {
+                                format: "dd MMM",
+                            },
+                        },
+                        plotOptions: {
+                            candlestick: {
+                                colors: {
+                                    upward: "#fd79a8",
+                                    downward: "#00b894",
+                                },
                             },
                         },
                     }}

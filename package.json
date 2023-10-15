@@ -11,7 +11,6 @@
         "@types/react": "^18.2.23",
         "@types/react-dom": "^18.2.8",
         "apexcharts": "^3.43.0",
-        "gh-pages": "^6.0.0",
         "react": "^18.2.0",
         "react-apexcharts": "^1.4.1",
         "react-dom": "^18.2.0",
@@ -30,7 +29,7 @@
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "predeploy": "npm run build",
-        "deploy": "gh-page -d build"
+        "deploy": "gh-pages -d build"
     },
     "eslintConfig": {
         "extends": [
@@ -53,7 +52,8 @@
     "devDependencies": {
         "@types/react-helmet": "^6.1.7",
         "@types/react-router-dom": "^5.3.3",
-        "@types/styled-components": "^5.1.28"
+        "@types/styled-components": "^5.1.28",
+        "gh-pages": "^6.0.0"
     },
-    "homepage": "https://Bona023.github.io/cointracker/"
+    "homepage": "https://bona023.github.io/cointracker/"
 }
