@@ -44,6 +44,7 @@ function Chart({ coinId }: ChartProps) {
                             mode: isDark ? "dark" : "light",
                         },
                         chart: {
+                            background: "none",
                             height: 300,
                             width: 500,
                             toolbar: {

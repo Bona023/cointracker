@@ -3,8 +3,8 @@ import { DefaultTheme } from "styled-components";
 export const darkTheme: DefaultTheme = {
     bgColor: "#2f3640",
     textColor: "#f5f6fa",
-    accentColor: "#3dc1d3",
-    cardBgColor: "transparent",
+    accentColor: "#81ecec",
+    cardBgColor: "#786fa9",
     reverseBg: "whitesmoke",
     reverseColor: "black",
     tableThOdd: "#776ea666",
@@ -16,8 +16,8 @@ export const darkTheme: DefaultTheme = {
 export const lightTheme: DefaultTheme = {
     bgColor: "whitesmoke",
     textColor: "black",
-    accentColor: "#3dc1d3",
-    cardBgColor: "#7d5fff",
+    accentColor: "#d63031",
+    cardBgColor: "#fdcb6e",
     reverseBg: "#2f3640",
     reverseColor: "whitesmoke",
     tableThOdd: "#fdcb6e",

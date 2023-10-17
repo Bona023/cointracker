@@ -21,13 +21,13 @@ const Title = styled.h1`
     font-size: 48px;
     color: ${(props) => props.theme.accentColor};
 `;
-const BtnBar = styled.div`
+export const BtnBar = styled.div`
     height: 5vh;
     display: flex;
     justify-content: center;
     align-items: center;
 `;
-const ThemeBtn = styled.button`
+export const ThemeBtn = styled.button`
     margin-left: 300px;
     font-size: 18px;
     color: ${(props) => props.theme.reverseColor};
@@ -42,6 +42,8 @@ const Coin = styled.li`
     margin-bottom: 10px;
     border-radius: 15px;
     border: 1px solid white;
+    font-size: 18px;
+    font-weight: 700;
     a {
         transition: color 0.3s ease-in;
         display: flex;
@@ -65,7 +67,6 @@ const CoinImg = styled.img`
     height: 35px;
     margin-right: 10px;
 `;
-
 interface ICoin {
     id: string;
     name: string;
@@ -99,7 +100,7 @@ function Coins() {
                         <Coin key={coin.id}>
                             <Link
                                 to={{
-                                    pathname: `/${coin.id}/chart`,
+                                    pathname: `/${coin.id}`,
                                     state: { name: coin.name },
                                 }}
                             >

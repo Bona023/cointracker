@@ -5,6 +5,9 @@ import Price from "./Price";
 import Chart from "./Chart";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
+import { BtnBar, ThemeBtn } from "./Coins";
+import { useRecoilState } from "recoil";
+import { isDarkAtom } from "../atom";
 
 export const Container = styled.div`
     padding: 0px 20px;
@@ -30,9 +33,9 @@ const BtnBox = styled.div`
     margin-bottom: 5px;
 `;
 const BackBtn = styled.button`
-    margin-left: 360px;
+    margin-left: 350px;
     padding: 7px 15px;
-    border-radius: 15px;
+    border-radius: 5px;
     font-weight: 600;
     background-color: ${(props) => props.theme.reverseBg};
     color: ${(props) => props.theme.reverseColor};
@@ -80,15 +83,16 @@ const Tab = styled.span<{ isActive: boolean }>`
     text-transform: uppercase;
     font-size: 12px;
     font-weight: 400;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 7px 0px;
+    background-color: ${(props) => (props.isActive ? props.theme.cardBgColor : "rgba(0, 0, 0, 0.5)")};
+    padding: 10px 0px;
     border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
     color: ${(props) => (props.isActive ? props.theme.accentColor : props.theme.textColor)};
     a {
         display: block;
     }
 `;
-
 interface RouteParams {
     coinId: string;
 }
@@ -151,6 +155,8 @@ interface PriceData {
 }
 
 function Coin() {
+    const [isDark, setIsDark] = useRecoilState(isDarkAtom);
+    const toggleDarkAtom = () => setIsDark((prev) => !prev);
     const { coinId } = useParams<RouteParams>();
     const { state } = useLocation<RouteState>();
     const priceMatch = useRouteMatch("/:coinId/price");
@@ -163,6 +169,9 @@ function Coin() {
             <Helmet>
                 <title>{state?.name ? state.name : loading ? "Loading..." : infoData?.name}</title>
             </Helmet>
+            <BtnBar>
+                <ThemeBtn onClick={toggleDarkAtom}>{isDark ? <span>🌞 Light</span> : <span>🌙 Dark</span>}</ThemeBtn>
+            </BtnBar>
             <Header>
                 <Title>{state?.name ? state.name : loading ? "Loading..." : infoData?.name}</Title>
             </Header>
