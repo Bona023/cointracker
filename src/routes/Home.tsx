@@ -19,7 +19,7 @@ const Header = styled.header`
 `;
 const Title = styled.h1`
     font-size: 48px;
-    color: ${(props) => props.theme.accentColor};
+    color: ${(props) => props.theme.titleColor};
 `;
 export const BtnBar = styled.div`
     height: 5vh;
@@ -27,21 +27,25 @@ export const BtnBar = styled.div`
     justify-content: center;
     align-items: center;
 `;
-export const ThemeBtn = styled.button`
-    margin-left: 300px;
+export const ModeBtn = styled.button`
+    margin-left: 330px;
     font-size: 18px;
-    color: ${(props) => props.theme.reverseColor};
+    color: ${(props) => props.theme.reverseText};
     background-color: ${(props) => props.theme.reverseBg};
     padding: 5px 10px;
     border-radius: 18px;
+    &:hover {
+        cursor: pointer;
+        color: ${(props) => props.theme.cardBgColor};
+    }
 `;
 const CoinsList = styled.ul``;
-const Coin = styled.li`
+const CoinCard = styled.li`
     background-color: ${(props) => props.theme.cardBgColor};
     color: ${(props) => props.theme.textColor};
     margin-bottom: 10px;
     border-radius: 15px;
-    border: 1px solid white;
+    border: 1px solid ${(props) => props.theme.bgColor};
     font-size: 18px;
     font-weight: 700;
     a {
@@ -55,6 +59,11 @@ const Coin = styled.li`
             color: ${(props) => props.theme.accentColor};
         }
     }
+`;
+const Rank = styled.div`
+    text-align: center;
+    line-height: 1.2;
+    margin-right: 20px;
 `;
 const Loader = styled.span`
     text-align: center;
@@ -77,7 +86,7 @@ interface ICoin {
     type: string;
 }
 
-function Coins() {
+function Home() {
     const [isDark, setIsDark] = useRecoilState(isDarkAtom);
     const toggleDarkAtom = () => setIsDark((prev) => !prev);
     const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
@@ -87,7 +96,7 @@ function Coins() {
                 <title>Coins</title>
             </Helmet>
             <BtnBar>
-                <ThemeBtn onClick={toggleDarkAtom}>{isDark ? <span>🌞 Light</span> : <span>🌙 Dark</span>}</ThemeBtn>
+                <ModeBtn onClick={toggleDarkAtom}>{isDark ? <span>🌞 Light</span> : <span>🌙 Dark</span>}</ModeBtn>
             </BtnBar>
             <Header>
                 <Title>Coins</Title>
@@ -97,21 +106,26 @@ function Coins() {
             ) : (
                 <CoinsList>
                     {data?.slice(0, 100).map((coin) => (
-                        <Coin key={coin.id}>
+                        <CoinCard key={coin.id}>
                             <Link
                                 to={{
                                     pathname: `/${coin.id}`,
                                     state: { name: coin.name },
                                 }}
                             >
+                                <Rank>
+                                    Rank
+                                    <br />
+                                    {coin.rank}
+                                </Rank>
                                 <CoinImg src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`} />
-                                {coin.name} &rarr;
+                                {coin.name}&nbsp;&nbsp;&rarr;
                             </Link>
-                        </Coin>
+                        </CoinCard>
                     ))}
                 </CoinsList>
             )}
         </Container>
     );
 }
-export default Coins;
+export default Home;

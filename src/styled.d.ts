@@ -4,10 +4,12 @@ declare module "styled-components" {
     export interface DefaultTheme {
         textColor: string;
         bgColor: string;
+        titleColor: string;
         accentColor: string;
         cardBgColor: string;
+        overviewBg: string;
         reverseBg: string;
-        reverseColor: string;
+        reverseText: string;
         tableThOdd: string;
         tableThEven: string;
         tableTdOdd: string;

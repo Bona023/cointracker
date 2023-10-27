@@ -5,7 +5,7 @@ import Price from "./Price";
 import Chart from "./Chart";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { Helmet } from "react-helmet";
-import { BtnBar, ThemeBtn } from "./Coins";
+import { BtnBar, ModeBtn } from "./Home";
 import { useRecoilState } from "recoil";
 import { isDarkAtom } from "../atom";
 
@@ -23,7 +23,7 @@ const Header = styled.header`
 `;
 const Title = styled.h1`
     font-size: 48px;
-    color: ${(props) => props.theme.accentColor};
+    color: ${(props) => props.theme.titleColor};
 `;
 const BtnBox = styled.div`
     height: 5vh;
@@ -32,13 +32,13 @@ const BtnBox = styled.div`
     align-items: center;
     margin-bottom: 5px;
 `;
-const BackBtn = styled.button`
+const HomeBtn = styled.button`
     margin-left: 350px;
     padding: 7px 15px;
-    border-radius: 5px;
+    border-radius: 15px;
     font-weight: 600;
-    background-color: ${(props) => props.theme.reverseBg};
-    color: ${(props) => props.theme.reverseColor};
+    background-color: ${(props) => props.theme.textColor};
+    color: ${(props) => props.theme.overviewBg};
     border: 0;
     &:hover {
         cursor: pointer;
@@ -54,7 +54,7 @@ const Loader = styled.span`
 const Overview = styled.div`
     display: flex;
     justify-content: space-between;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: ${(props) => props.theme.overviewBg};
     padding: 10px 20px;
     border-radius: 10px;
 `;
@@ -83,7 +83,7 @@ const Tab = styled.span<{ isActive: boolean }>`
     text-transform: uppercase;
     font-size: 12px;
     font-weight: 400;
-    background-color: ${(props) => (props.isActive ? props.theme.cardBgColor : "rgba(0, 0, 0, 0.5)")};
+    background-color: ${(props) => (props.isActive ? props.theme.cardBgColor : props.theme.overviewBg)};
     padding: 10px 0px;
     border-radius: 10px;
     font-size: 14px;
@@ -170,7 +170,7 @@ function Coin() {
                 <title>{state?.name ? state.name : loading ? "Loading..." : infoData?.name}</title>
             </Helmet>
             <BtnBar>
-                <ThemeBtn onClick={toggleDarkAtom}>{isDark ? <span>🌞 Light</span> : <span>🌙 Dark</span>}</ThemeBtn>
+                <ModeBtn onClick={toggleDarkAtom}>{isDark ? <span>🌞 Light</span> : <span>🌙 Dark</span>}</ModeBtn>
             </BtnBar>
             <Header>
                 <Title>{state?.name ? state.name : loading ? "Loading..." : infoData?.name}</Title>
@@ -181,7 +181,7 @@ function Coin() {
                         pathname: `/`,
                     }}
                 >
-                    <BackBtn>Home</BackBtn>
+                    <HomeBtn>Home</HomeBtn>
                 </Link>
             </BtnBox>
             {loading ? (

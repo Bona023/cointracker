@@ -73,8 +73,8 @@ function Chart({ coinId }: ChartProps) {
                         plotOptions: {
                             candlestick: {
                                 colors: {
-                                    upward: "#fd79a8",
-                                    downward: "#00b894",
+                                    upward: "#FC427B",
+                                    downward: "#1B9CFC",
                                 },
                             },
                         },
